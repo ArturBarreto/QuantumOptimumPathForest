@@ -37,6 +37,3 @@ O script adiciona várias restrições para moldar o problema de forma a buscar 
 
 ### 8. Resultados
 - O script imprime os resultados da otimização, que incluem as variáveis binárias que definem a solução ótima para o problema QUBO, respeitando as restrições impostas.
-
-### Em Resumo
-Este algoritmo busca resolver um problema de otimização sobre um grafo usando técnicas de otimização quântica, especificamente o QAOA, para encontrar uma configuração ótima das arestas do grafo que minimiza o custo total, considerando uma série de restrições que moldam o problema para uma árvore geradora mínima com regras adicionais sobre profundidade e conectividade.
