@@ -1,3 +1,8 @@
+# Este algoritmo busca resolver um problema de otimização sobre um grafo usando técnicas de otimização quântica, 
+# especificamente o QAOA, para encontrar uma configuração ótima das arestas do grafo que minimiza o custo total, 
+# considerando uma série de restrições que moldam o problema para uma árvore geradora mínima com regras adicionais 
+# sobre profundidade e conectividade.
+
 from qiskit_aer import AerSimulator
 from qiskit_ibm_runtime import Sampler
 from qiskit_optimization.problems import QuadraticProgram
