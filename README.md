@@ -7,7 +7,7 @@ This project aims to solve an optimization problem over a graph using quantum op
 ## Project Structure
 
 ```
-qaoa_project/
+QuantumOptimumPathForest/
 ├── main.py
 ├── graph/
 │   ├── __init__.py
