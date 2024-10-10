@@ -1,39 +1,191 @@
-Este script implementa um algoritmo de otimização quântica para resolver um problema de Programação Quadrática Binária (QUBO) utilizando o Quantum Approximate Optimization Algorithm (QAOA) do Qiskit. Aqui está uma explicação passo a passo do que o algoritmo faz:
+# Quantum Optimum-Path Forest Project
 
-### 1. Importação de Bibliotecas
-As bibliotecas importadas são do Qiskit e NetworkX:
-- `qiskit_aer`: Para simulação de circuitos quânticos.
-- `qiskit_ibm_runtime`: Para executar algoritmos de otimização quântica.
-- `qiskit_optimization`: Para formular problemas de otimização.
-- `qiskit_algorithms`: Para aplicar o algoritmo QAOA.
-- `networkx`: Para manipulação e criação de grafos.
+## Overview
 
-### 2. Definição do Grafo
-O grafo \( G \) é definido com um conjunto de arestas ponderadas. Essas arestas representam conexões entre nós, com pesos associados que influenciam na função objetivo do problema de otimização.
+This project aims to solve an optimization problem over a graph using quantum optimization techniques, specifically the **Quantum Approximate Optimization Algorithm (QAOA)**. The goal is to find an optimal configuration of the graph's edges that minimizes the total cost, considering a set of constraints that shape the problem into a **Minimum Spanning Tree (MST)** with additional rules regarding depth and connectivity.
 
-### 3. Criação do Problema QUBO
-- Um problema de otimização binária quadrática (QUBO) é criado usando a classe `QuadraticProgram`.
-- Variáveis binárias são adicionadas ao problema representando as arestas do grafo. As variáveis são nomeadas de forma consistente para evitar duplicações (ex: `y_0_1` para a aresta entre os nós 0 e 1).
+## Project Structure
 
-### 4. Função Objetivo
-- A função objetivo do QUBO é minimizar o custo total das arestas incluídas no grafo. Os custos são definidos pelos pesos das arestas.
+```
+qaoa_project/
+├── main.py
+├── graph/
+│   ├── __init__.py
+│   └── graph.py
+├── optimization/
+│   ├── __init__.py
+│   └── qubo_problem.py
+├── visualization/
+│   ├── __init__.py
+│   └── plotting.py
+├── utils/
+│   ├── __init__.py
+│   └── config.py
+└── requirements.txt
+```
 
-### 5. Restrições
-O script adiciona várias restrições para moldar o problema de forma a buscar a Árvore Geradora Mínima (MST) com requisitos adicionais:
-1. **Restrição do Nó Raiz:** Garante que uma aresta conecte o grafo a partir de um nó raiz.
-2. **Atribuição de Profundidade dos Nós:** Assegura que a profundidade de cada nó seja corretamente definida.
-3. **Inclusão da Aresta e Correspondência de Profundidade:** Verifica a correspondência entre a inclusão da aresta e a profundidade do nó.
-4. **Conectividade:** Garante que cada nó, exceto a raiz, esteja conectado a pelo menos outro nó.
-5. **Restrição de Grau:** Limita o grau de cada nó a um valor máximo (neste exemplo, 2), o que controla a quantidade de conexões que um nó pode ter.
+- **main.py**: Entry point of the program. Coordinates the execution of modules.
+- **graph/**: Contains the `Graph` class responsible for creating and manipulating the graph.
+- **optimization/**: Contains the `QUBOProblem` class for setting up and solving the optimization problem.
+- **visualization/**: Contains functions for visualizing the graph and the results.
+- **utils/**: Contains configurations, tokens, and environment variables.
+- **requirements.txt**: Lists all project dependencies.
 
-### 6. Configuração do QAOA
-- Um simulador quântico (`AerSimulator`) é usado como backend para executar o QAOA.
-- Um otimizador clássico, `COBYLA`, é utilizado para ajustar os parâmetros do QAOA.
-- O QAOA é configurado com um sampler que executa a simulação quântica e um ponto inicial para os parâmetros do circuito quântico.
+## Features
 
-### 7. Solução do Problema
-- O `MinimumEigenOptimizer` é usado com o QAOA para encontrar a solução ótima para o problema QUBO formulado.
-- A solução final, que é a configuração das variáveis que minimiza a função objetivo, é impressa.
+- Constructs a weighted graph based on predefined edges and weights.
+- Formulates the optimization problem as a **Quadratic Unconstrained Binary Optimization (QUBO)** problem.
+- Implements constraints to ensure the solution represents a valid MST.
+- Utilizes QAOA to find the optimal solution, either via simulation or on actual IBM Quantum hardware.
+- Visualizes the original graph and the resulting MST.
 
-### 8. Resultados
-- O script imprime os resultados da otimização, que incluem as variáveis binárias que definem a solução ótima para o problema QUBO, respeitando as restrições impostas.
+## Installation
+
+### Prerequisites
+
+- **Python 3.8** or higher
+- **Qiskit 1.0** or higher
+- **pip** (Python package installer)
+- (Optional) **IBM Quantum Platform** account for running on real quantum hardware
+
+### Clone the Repository
+
+```bash
+git clone https://github.com/ArturBarreto/QuantumOptimumPathForest.git
+cd QuantumOptimumPathForest
+```
+
+### Create a Virtual Environment
+
+It's recommended to use a virtual environment to manage dependencies.
+
+```bash
+python -m venv venv
+source venv/bin/activate  # On Windows: venv\Scripts\activate
+```
+
+### Install Dependencies
+
+Install the required Python packages using `pip`:
+
+```bash
+pip install -r requirements.txt
+```
+
+## Configuration
+
+The project uses environment variables to manage configurations:
+
+- **`QXToken`**: Your IBM Quantum Plataform API token.
+- **`SIMULATION`**: Set to `"True"` to run the simulation locally or `"False"` to run on IBM Quantum hardware.
+
+You can set these variables in your environment or modify them directly in the `utils/config.py` file.
+
+### Setting Environment Variables
+
+On Unix/Linux:
+
+```bash
+export QXToken='YOUR_IBM_QUANTUM_PLATAFORM_API_TOKEN'
+export SIMULATION='True'  # or 'False' to use real hardware
+```
+
+On Windows:
+
+```cmd
+set QXToken=YOUR_IBM_QUANTUM_PLATAFORM_API_TOKEN
+set SIMULATION=True  # or False to use real hardware
+```
+
+**Note**: Replace `'YOUR_IBM_QUANTUM_PLATAFORM_API_TOKEN'` with your actual IBM Quantum Plataform API token and update the contact information as needed.
+
+## Usage
+
+Run the main script:
+
+```bash
+python main.py
+```
+
+The program will:
+
+1. Create a weighted graph based on predefined edges.
+2. Display the graph.
+3. Set up the QUBO problem with the appropriate variables and constraints.
+4. Solve the problem using QAOA.
+5. Display the execution time and solution details.
+6. Visualize the MST solution on the graph.
+
+## Example Output
+
+- The program will print information about the graph, the execution time, and the solution.
+- Graphical windows will display the original graph and the MST solution.
+
+## Project Details
+
+### Graph Construction
+
+The graph is defined with 5 nodes and weighted edges:
+
+```python
+edges = [
+    (0, 1, 2),
+    (0, 2, 3),
+    (1, 2, 1),
+    (1, 3, 4),
+    (2, 3, 5),
+    (2, 4, 2),
+    (3, 4, 1),
+    (0, 3, 6),
+    (1, 4, 3)
+]
+```
+
+### QUBO Problem Formulation
+
+- **Objective Function**: Minimize the total weight of the selected edges.
+- **Constraints**:
+  - **Edge Count Constraint**: The number of edges selected should be `n - 1`, where `n` is the number of nodes.
+  - **Connectivity Constraints**: Ensure that each node (except the root) is connected to at least one other node.
+  - **Degree Constraints**: Limit the degree of each node to prevent cycles and ensure a tree structure.
+
+### Quantum Backend
+
+- **Simulation**: Uses `qiskit_aer` for local simulation.
+- **IBM Quantum Hardware**: Can run on the least busy IBM Quantum device available.
+
+## Dependencies
+
+The project relies on the following Python packages:
+
+- **qiskit**
+- **qiskit-aer**
+- **qiskit-optimization**
+- **qiskit-ibm-runtime**
+- **matplotlib**
+- **networkx**
+
+These are specified in the `requirements.txt` file.
+
+## Contributing
+
+Contributions are welcome! Please follow these steps:
+
+1. **Fork** the repository.
+2. **Create a new branch**: `git checkout -b feature-name`.
+3. **Commit your changes**: `git commit -m 'Add feature'`.
+4. **Push to the branch**: `git push origin feature-name`.
+5. **Open a Pull Request**.
+
+## License
+
+This project is licensed under the **MIT License**.
+
+## Contact
+
+For questions or support, please contact:
+
+- **Artur Gomes Barreto**
+- Email: [artur.barreto@alu.ufc.br](mailto:artur.barreto@alu.ufc.br)
+
+---

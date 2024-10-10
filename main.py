@@ -1,7 +1,7 @@
-# Este algoritmo busca resolver um problema de otimização sobre um grafo usando técnicas de otimização quântica, 
-# especificamente o QAOA, para encontrar uma configuração ótima das arestas do grafo que minimiza o custo total, 
-# considerando uma série de restrições que moldam o problema para uma árvore geradora mínima com regras adicionais 
-# sobre profundidade e conectividade.
+# This algorithm seeks to solve an optimization problem over a graph using quantum optimization techniques,
+# specifically the QAOA (Quantum Approximate Optimization Algorithm), to find an optimal configuration of the
+# graph's edges that minimizes the total cost. It does so by considering a series of constraints that shape the
+# problem into a minimum spanning tree with additional rules regarding depth and connectivity.
 
 from graph.graph import Graph
 from optimization.qubo_problem import QUBOProblem
