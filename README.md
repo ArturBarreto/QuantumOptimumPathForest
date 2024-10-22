@@ -9,6 +9,9 @@ This project aims to solve an optimization problem over a graph using quantum op
 ```
 QuantumOptimumPathForest/
 ├── main.py
+├── conquest/
+│   ├── __init__.py
+│   └── classification.py
 ├── graph/
 │   ├── __init__.py
 │   └── graph.py
@@ -148,6 +151,15 @@ edges = [
   - **Edge Count Constraint**: The number of edges selected should be `n - 1`, where `n` is the number of nodes.
   - **Connectivity Constraints**: Ensure that each node (except the root) is connected to at least one other node.
   - **Degree Constraints**: Limit the degree of each node to prevent cycles and ensure a tree structure.
+
+### Conquest (Classification) Phase
+
+After finding the MST, the project proceeds to classify the nodes based on the closest prototype (root node) in the MST. This step mimics the "conquest" phase of the Optimum-Path Forest algorithm.
+
+The process involves:
+- **Prototype Selection**: Identifying root nodes (prototypes) for each connected component in the MST.
+- **Classification**: Using a breadth-first search (BFS) to assign each node to its closest prototype.
+- **Visualization**: Displaying the final classification, where each node is color-coded according to its assigned class.
 
 ### Quantum Backend
 
