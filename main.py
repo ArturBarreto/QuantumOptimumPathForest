@@ -25,7 +25,7 @@ def main():
     #    ,(1, 4, 3)
     # ]
 
-    # ToDo: Implemet as cartesian coordinates
+    # ToDo: Implement as cartesian coordinates
     edges = [
         # Component 1
         (0, 1, 3),  # Edge between node 0 and node 1 with weight 3
