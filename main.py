@@ -25,6 +25,7 @@ def main():
     #    ,(1, 4, 3)
     # ]
 
+    # ToDo: Implemet as cartesian coordinates
     edges = [
         # Component 1
         (0, 1, 3),  # Edge between node 0 and node 1 with weight 3
@@ -40,8 +41,12 @@ def main():
         (6, 7, 1),  # Edge between node 6 and node 7 with weight 1
         (5, 6, 8),  # Edge between node 5 and node 6 with weight 8
 
+        # Connecting components 1 and 3
+        (1, 7, 2),  # Edge between node 1 and node 7 with weight 2
+        (1, 6, 4),  # Edge between node 1 and node 6 with weight 4
+
         # Connecting components 2 and 3
-        (4, 6, 7)   # Edge between node 4 and node 6 with weight 7
+        (4, 6, 7),  # Edge between node 4 and node 6 with weight 7
     ]
 
     # Instantiate and create the graph
