@@ -79,19 +79,34 @@ def main():
             mst_edges.append((i, j))
 
     # Step 1: Extract prototypes from the MST
-    prototypes = find_prototypes(mst_edges, graph.G)
+    prototypes = find_prototypes(mst_edges, graph)
 
-    # Step 2: Perform the classification phase
-    node_classes = classify_nodes(mst_edges, prototypes, graph.G)
+    # Step 2: Classify nodes using BFS from prototypes
+    classified_node_classes = classify_nodes(mst_edges, prototypes, graph)
 
     # Step 3: Print results
-    print("Node classifications (by prototype):")
-    for node, prototype in node_classes.items():
-        print(f"Node {node} is classified under Prototype {prototype}")
+    print("Prototypes:")
+    for cls, node in prototypes.items():
+        print(f"Node {node} (Class {cls})")
+
+    print("\nClassified Nodes:")
+    for node, cls in enumerate(classified_node_classes):
+        print(f"Node {node} (Class {cls})")
 
     # Optional visualization
-    colors = ['lightblue', 'lightgreen', 'orange', 'pink', 'yellow', 'red']
-    node_colors = [colors[prototypes.index(node_classes[node])] for node in graph.G.nodes]
+    # Generate a sorted list of unique class labels
+    unique_classes = sorted(set(classified_node_classes))
+
+    # Define colors (ensure there are enough colors for the number of classes)
+    colors = ['orange', 'lightgreen', 'blue', 'pink', 'yellow', 'red']
+
+    # Map each class label to a color
+    class_to_color = {cls: colors[i % len(colors)] for i, cls in enumerate(unique_classes)}
+
+    # Assign colors to nodes based on their classes
+    node_colors = [class_to_color[classified_node_classes[node]] for node in graph.G.nodes()]
+
+    # Draw the graph
     pos = nx.spring_layout(graph.G, seed=42)
     nx.draw(graph.G, pos, with_labels=True, node_color=node_colors, node_size=500, font_size=10, font_weight='bold')
     labels = nx.get_edge_attributes(graph.G, 'weight')
