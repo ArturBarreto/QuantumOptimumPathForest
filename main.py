@@ -88,7 +88,7 @@ def main():
     # Optional visualization
     colors = ['lightblue', 'lightgreen', 'orange', 'pink', 'yellow', 'red']
     node_colors = [colors[prototypes.index(node_classes[node])] for node in graph.G.nodes]
-    pos = nx.spring_layout(graph.G, seed=72)
+    pos = nx.spring_layout(graph.G, seed=42)
     nx.draw(graph.G, pos, with_labels=True, node_color=node_colors, node_size=500, font_size=10, font_weight='bold')
     labels = nx.get_edge_attributes(graph.G, 'weight')
     nx.draw_networkx_edge_labels(graph.G, pos, edge_labels=labels)
