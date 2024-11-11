@@ -94,6 +94,13 @@ def main():
         print(f"Node {node} (Class {cls}) is classified under Prototype {prototypes.get(cls)} ")
 
     # Optional visualization
+
+    # Create a set of MST edges
+    mst_edge_set = set()
+    for edge in mst_edges:
+        # Ensure edges are stored with sorted node tuples
+        mst_edge_set.add((min(edge[0], edge[1]), max(edge[0], edge[1])))
+
     # Generate a sorted list of unique class labels
     unique_classes = sorted(set(classified_node_classes))
 
@@ -106,11 +113,43 @@ def main():
     # Assign colors to nodes based on their classes
     node_colors = [class_to_color[classified_node_classes[node]] for node in graph.G.nodes()]
 
-    # Draw the graph
+    # Use the same positions for consistency
     pos = nx.spring_layout(graph.G, seed=42)
-    nx.draw(graph.G, pos, with_labels=True, node_color=node_colors, node_size=500, font_size=10, font_weight='bold')
+
+    # Create a figure
+    plt.figure(figsize=(10, 8))
+
+    # Draw all nodes
+    nx.draw_networkx_nodes(graph.G, pos, nodelist=graph.G.nodes(),
+                           node_color=node_colors, node_size=500)
+
+    # Draw labels for all nodes
+    nx.draw_networkx_labels(graph.G, pos, labels={node: node for node in graph.G.nodes()},
+                            font_size=10, font_weight='bold')
+
+    # Assign colors to edges based on whether they are in the MST and connect nodes of the same class
+    edge_colors = []
+    for edge in graph.G.edges():
+        edge_key = (min(edge[0], edge[1]), max(edge[0], edge[1]))
+        # Check if edge is in MST
+        if edge_key in mst_edge_set:
+            # Check if nodes are in the same class
+            if classified_node_classes[edge[0]] == classified_node_classes[edge[1]]:
+                edge_colors.append('red')  # MST edge connecting same class nodes
+            else:
+                edge_colors.append('lightgray')  # MST edge connecting different class nodes
+        else:
+            edge_colors.append('lightgray')  # Non-MST edge
+
+    # Draw all edges with assigned colors
+    nx.draw_networkx_edges(graph.G, pos, edgelist=graph.G.edges(), edge_color=edge_colors, width=2)
+
+    # Optionally, draw edge labels for the entire graph
     labels = nx.get_edge_attributes(graph.G, 'weight')
     nx.draw_networkx_edge_labels(graph.G, pos, edge_labels=labels)
+
+    # Finalize and display the plot
+    plt.axis('off')
     plt.title("Classified Graph Based on MST Prototypes")
     plt.show()
 
