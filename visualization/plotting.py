@@ -9,7 +9,7 @@ def draw_solution(G, solution, title="Minimum Spanning Tree Solution"):
             mst_edges.append((i, j))
 
     if mst_edges:
-        pos = nx.spring_layout(G, seed=72)
+        pos = nx.spring_layout(G, seed=42)
         nx.draw_networkx_nodes(G, pos)
         nx.draw_networkx_edges(G, pos, edgelist=mst_edges, edge_color='r', width=2)
         nx.draw_networkx_edges(
