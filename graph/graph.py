@@ -17,7 +17,7 @@ class Graph:
             print(edge)
 
     def draw_graph(self, title="Graph"):
-        self.pos = nx.spring_layout(self.G)
+        self.pos = nx.spring_layout(self.G, seed=72)
         nx.draw(self.G, self.pos, with_labels=True, node_color='lightblue',
                 node_size=500, font_size=10, font_weight='bold')
         labels = nx.get_edge_attributes(self.G, 'weight')
