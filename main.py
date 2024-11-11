@@ -91,7 +91,7 @@ def main():
 
     print("\nClassified Nodes:")
     for node, cls in enumerate(classified_node_classes):
-        print(f"Node {node} (Class {cls})")
+        print(f"Node {node} (Class {cls}) is classified under Prototype {prototypes.get(cls)} ")
 
     # Optional visualization
     # Generate a sorted list of unique class labels
