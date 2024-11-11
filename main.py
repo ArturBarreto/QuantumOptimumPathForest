@@ -51,7 +51,7 @@ def main():
     # ]
 
     # Example usage:
-    edges = generate_edges(2, seed=42)
+    edges = generate_edges(5, seed=42, ensure_connected=False)
 
     # Instantiate and create the graph
     graph = Graph()
