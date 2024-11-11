@@ -4,14 +4,17 @@ import matplotlib.pyplot as plt
 class Graph:
     def __init__(self):
         self.G = nx.Graph()
+        self.node_classes = []
         self.n = 0
         self.pos = None
 
-    def create_graph(self, edges):
+    def create_graph(self, edges, node_classes):
         self.G.add_weighted_edges_from(edges)
         self.n = self.G.number_of_nodes()
+        self.node_classes = node_classes
         print(f"Number of nodes: {self.n}")
         print(f"Number of edges: {self.G.number_of_edges()}")
+        print(f'Node classes: {self.node_classes}')
         print("Edges and weights:")
         for edge in self.G.edges(data=True):
             print(edge)

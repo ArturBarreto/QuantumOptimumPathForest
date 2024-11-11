@@ -52,11 +52,10 @@ def main():
 
     # Example usage:
     edges, node_classes = generate_edges(7, num_classes=2, seed=42, ensure_connected=False)
-    print(f'Node classes: {node_classes}')
 
     # Instantiate and create the graph
     graph = Graph()
-    graph.create_graph(edges)
+    graph.create_graph(edges, node_classes)
     graph.draw_graph(title="Graph with Nodes and Weighted Edges")
 
     # Configure and solve the QUBO problem
