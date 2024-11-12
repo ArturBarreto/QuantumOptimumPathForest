@@ -158,7 +158,7 @@ class QUBOProblem:
                 # No cycles detected, solution is a valid tree
                 self.solution = solution
                 print(
-                    f"Solution found after {iteration} iterations with {len(cycle_constraints)} cycle constraints added.")
+                    f"Solution found after {iteration} iterations with {len(cycle_constraints)} cycle constraints added.\n")
                 # Exit the loop as we have a valid MST
                 return self.solution
             else:

@@ -15,8 +15,11 @@ def draw_solution(G, solution, title="Minimum Spanning Tree Solution"):
         nx.draw_networkx_edges(
             G, pos, edgelist=[e for e in G.edges if e not in mst_edges], style='dotted'
         )
+        labels = nx.get_edge_attributes(G, 'weight')
+        nx.draw_networkx_edge_labels(G, pos, edge_labels=labels)
         nx.draw_networkx_labels(G, pos)
         plt.title(title)
+        plt.axis('off')
         plt.show()
     else:
         print("No edges found in the MST solution. Please check the variable consistency.")
