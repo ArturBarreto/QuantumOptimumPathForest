@@ -17,13 +17,18 @@ def find_prototypes(mst_edges, graph):
     for edge in mst_edges:
         nodes_in_mst.update(edge)
 
+    # Select a prototype
+    # Assign the first encountered node of each class as prototype
+    # Here, you can choose based on degree or any other heuristic
+    # For example, pick the node with the lowest degree in the component
     for node in nodes_in_mst:
         cls = graph.node_classes[node]
         if cls not in prototypes:
-            prototypes[cls] = node  # Assign the first encountered node of each class as prototype
+            prototypes[cls] = node
     return prototypes
 
-# Function to classify nodes using BFS from each prototype
+# Function to classify nodes using breadth-first search (BFS) from each prototype to classify nodes
+# Assigns each node to the prototype to which it is most closely connected, based on the MST structure
 def classify_nodes(mst_edges, prototypes, graph):
     """
     Classify nodes using BFS from each prototype in the MST.
@@ -49,12 +54,13 @@ def classify_nodes(mst_edges, prototypes, graph):
     # Initialize visited set
     visited = set()
 
-    # Start BFS from each prototype
+    # Perform breadth-first search (BFS) from each prototype to classify nodes
     for cls, node in prototypes.items():
         node_classes[node] = cls
         visited.add(node)
         queue.append((node, cls))
 
+    # Use BFS to explore all nodes connected to the prototype in the MST
     while queue:
         current_node, current_class = queue.popleft()
         for neighbor in adjacency.get(current_node, []):
